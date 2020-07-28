@@ -123,7 +123,25 @@ for (let i = 0; i < t.TYPES.length; i++) {
   lines.push(decl);
 }
 
+for (const typeName of t.TYPES) {
+  const isDeprecated = !!t.DEPRECATED_KEYS[typeName];
+  const realName = isDeprecated ? t.DEPRECATED_KEYS[typeName] : typeName;
+
+  let decl = `declare function is${typeName}(node: ?Object, opts?: ?Object): boolean`;
+  if (t.NODE_FIELDS[realName]) {
+    decl += ` %checks (node instanceof ${NODE_PREFIX}${realName})`;
+  }
+  lines.push(decl);
+
+  lines.push(
+    `declare function assert${typeName}(node: object | null | undefined, opts?: object | null): void`
+  );
+}
+
 lines.push(
+  // assert/
+  `declare function assertNode(obj: any): void`,
+
   // builders/
   // eslint-disable-next-line max-len
   `declare function createTypeAnnotationBasedOnTypeof(type: 'string' | 'number' | 'undefined' | 'boolean' | 'function' | 'object' | 'symbol'): ${NODE_PREFIX}TypeAnnotation`,
