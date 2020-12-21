@@ -47,7 +47,7 @@ jobs:
       - name: Commit changes
         run: |
           git config user.name "Babel Bot"
-          git config user.email "Babel Bot <babel-bot@users.noreply.github.com>"
+          git config user.email "babel-bot@users.noreply.github.com"
           git checkout -b update-test262-parser
           git commit -am "chore: update test262 to ${{ steps.test262.outputs.sha1 }}"
           git push --force origin update-test262-parser
@@ -56,18 +56,23 @@ jobs:
         with:
           github-token: ${{ secrets.BOT_TOKEN }}
           script: |
-            const base = process.env.GITHUB_REF.replace("/ref/heads/", "");
+            // const base = process.env.GITHUB_REF.replace("refs/heads/", "");
+            console.log("GITHUB_REF: ", process.env.GITHUB_REF);
+            const base = "main";
             const requestParam = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: "update-test262-parser",
-              base: base
+              head: "babel:update-test262-parser",
+              base: base,
+              state: "open"
             };
             const result = await github.pulls.list(requestParam);
             console.log("Open PR request: ", requestParam);
             console.log("Open PR response: ", result);
             const prs = result.data;
             if (prs.length === 0) {
+              console.log("Now you can uncomment the following and merged to main")
+              /*
               const requestParam = {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -87,4 +92,5 @@ jobs:
                 issue_number: result.data.number,
                 labels: ["area: test262", "repo automation 🤖"]
               })
+              */
             }
