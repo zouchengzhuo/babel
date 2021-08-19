@@ -124,8 +124,7 @@ These are the core @babel/parser (babylon) AST node types.
 
 # Node objects
 
-AST nodes are represented as `Node` objects, which may have any prototype inheritance but which implement the following interface:
-
+AST节点表示为`Node`对象，这些对象可能具有任何原型继承，但实现以下接口：
 ```js
 interface Node {
   type: string;
@@ -133,9 +132,9 @@ interface Node {
 }
 ```
 
-The `type` field is a string representing the AST variant type. Each subtype of `Node` is documented below with the specific string of its `type` field. You can use this field to determine which interface a node implements.
+`type`字段是表示AST变量类型的字符串。`Node`的每个子类型都根据其`type`字段在下面的文档中有对应的描述。可以使用此字段确定节点实现哪一个接口。
 
-The `loc` field represents the source location information of the node. If the node contains no information about the source location, the field is `null`; otherwise it is an object consisting of a start position (the position of the first character of the parsed source region) and an end position (the position of the first character after the parsed source region):
+`loc` 字段表示节点的源位置信息。如果节点不包含有关源位置的信息，则该字段为“null”；否则它是一个由开始位置（解析源区域的第一个字符的位置）和结束位置（解析源区域后的第一个字符的位置）组成的对象：
 
 ```js
 interface SourceLocation {
@@ -145,7 +144,7 @@ interface SourceLocation {
 }
 ```
 
-Each `Position` object consists of a `line` number (1-indexed) and a `column` number (0-indexed):
+每个 `Position` 对象由一个 `line` 编号（1-indexed）和一个 `column` 编号（0-indexed）组成： 
 
 ```js
 interface Position {
@@ -158,19 +157,19 @@ interface Position {
 
 ### @babel/parser (Babylon) v7
 
-Flow: Node renamed from `ExistentialTypeParam` to `ExistsTypeAnnotation` [#322](https://github.com/babel/babylon/pull/322)
+Flow: 节点`ExistentialTypeParam` 重命名为 `ExistsTypeAnnotation` [#322](https://github.com/babel/babylon/pull/322)
 
-Flow: Node renamed from `NumericLiteralTypeAnnotation` to `NumberLiteralTypeAnnotation` [babel/babylon#332](https://github.com/babel/babylon/pull/332)
+Flow: 节点`NumericLiteralTypeAnnotation` 重命名为 `NumberLiteralTypeAnnotation` [babel/babylon#332](https://github.com/babel/babylon/pull/332)
 
-Flow: Node `Variance` which replaces the string value of the `variance` field on several nodes [babel/babylon#333](https://github.com/babel/babylon/pull/333)
+Flow: 节点 `Variance` 替换多个节点上 `variance` 字段的字符串值 [babel/babylon#333](https://github.com/babel/babylon/pull/333)
 
-Flow: `ObjectTypeIndexer` location info matches Flow's better [babel/babylon#228](https://github.com/babel/babylon/pull/228)
+Flow: `ObjectTypeIndexer` 位置信息与 Flow 的匹配度更好 [babel/babylon#228](https://github.com/babel/babylon/pull/228)
 
-Node `ForAwaitStatement` has been removed [#349](https://github.com/babel/babylon/pull/349) in favor of modifying `ForOfStatement`
+Node `ForAwaitStatement`被移除 [#349](https://github.com/babel/babylon/pull/349) in favor of modifying `ForOfStatement`
 
-`RestProperty` and `SpreadProperty` have been dropped in favor of `RestElement` and `SpreadElement`.
+`RestProperty` 和 `SpreadProperty` 已被删除，取而代之的是 `RestElement` 和 `SpreadElement`。 
 
-# Identifier
+# 标识符 Identifier
 
 ```js
 interface Identifier <: Expression, Pattern {
@@ -178,10 +177,9 @@ interface Identifier <: Expression, Pattern {
   name: string;
 }
 ```
+一个标识符。请注意，标识符可以是表达式或Pattern。 
 
-An identifier. Note that an identifier may be an expression or a destructuring pattern.
-
-# PrivateName
+# 私有名称 PrivateName
 
 ```js
 interface PrivateName <: Node {
@@ -192,7 +190,7 @@ interface PrivateName <: Node {
 
 A Private Name Identifier.
 
-# Literals
+# 字面量基础接口 Literals
 
 ```js
 interface Literal <: Expression { }
@@ -200,7 +198,7 @@ interface Literal <: Expression { }
 
 A literal token. May or may not represent an expression.
 
-## RegExpLiteral
+## 正则字面量 RegExpLiteral
 
 ```js
 interface RegExpLiteral <: Literal {
@@ -210,7 +208,7 @@ interface RegExpLiteral <: Literal {
 }
 ```
 
-## NullLiteral
+## null字面量 NullLiteral
 
 ```js
 interface NullLiteral <: Literal {
@@ -218,7 +216,7 @@ interface NullLiteral <: Literal {
 }
 ```
 
-## StringLiteral
+## 字符串字面量 StringLiteral
 
 ```js
 interface StringLiteral <: Literal {
@@ -227,7 +225,7 @@ interface StringLiteral <: Literal {
 }
 ```
 
-## BooleanLiteral
+## boolean字面量 BooleanLiteral
 
 ```js
 interface BooleanLiteral <: Literal {
@@ -236,7 +234,7 @@ interface BooleanLiteral <: Literal {
 }
 ```
 
-## NumericLiteral
+## 数字字面量 NumericLiteral
 
 ```js
 interface NumericLiteral <: Literal {
@@ -245,7 +243,7 @@ interface NumericLiteral <: Literal {
 }
 ```
 
-## BigIntLiteral
+## BigInt字面量 BigIntLiteral
 
 ```js
 interface BigIntLiteral <: Literal {
@@ -256,7 +254,7 @@ interface BigIntLiteral <: Literal {
 
 The `value` property is the string representation of the `BigInt` value. It doesn't include the suffix `n`.
 
-## DecimalLiteral
+## 十进制字面量 DecimalLiteral
 
 ```js
 interface DecimalLiteral <: Literal {
@@ -267,7 +265,7 @@ interface DecimalLiteral <: Literal {
 
 The `value` property is the string representation of the `BigDecimal` value. It doesn't include the suffix `m`.
 
-# Programs
+# 程序入口 Programs
 
 ```js
 interface Program <: Node {
@@ -283,7 +281,7 @@ A complete program source tree.
 
 Parsers must specify `sourceType` as `"module"` if the source has been parsed as an ES6 module. Otherwise, `sourceType` must be `"script"`.
 
-# Functions
+# 函数 Functions
 
 ```js
 interface Function <: Node {
@@ -297,7 +295,7 @@ interface Function <: Node {
 
 A function [declaration](#functiondeclaration) or [expression](#functionexpression).
 
-# Statements
+# 表达式基类 Statements
 
 ```js
 interface Statement <: Node { }
@@ -305,7 +303,7 @@ interface Statement <: Node { }
 
 Any statement.
 
-## ExpressionStatement
+## 表达式语句 ExpressionStatement
 
 ```js
 interface ExpressionStatement <: Statement {
@@ -316,7 +314,7 @@ interface ExpressionStatement <: Statement {
 
 An expression statement, i.e., a statement consisting of a single expression.
 
-## BlockStatement
+## 块级表达式 BlockStatement
 
 ```js
 interface BlockStatement <: Statement {
@@ -328,7 +326,7 @@ interface BlockStatement <: Statement {
 
 A block statement, i.e., a sequence of statements surrounded by braces.
 
-## EmptyStatement
+## 空表达式 EmptyStatement
 
 ```js
 interface EmptyStatement <: Statement {
@@ -338,7 +336,7 @@ interface EmptyStatement <: Statement {
 
 An empty statement, i.e., a solitary semicolon.
 
-## DebuggerStatement
+## 调试表达式 DebuggerStatement
 
 ```js
 interface DebuggerStatement <: Statement {
@@ -348,7 +346,7 @@ interface DebuggerStatement <: Statement {
 
 A `debugger` statement.
 
-## WithStatement
+## with表达式 WithStatement
 
 ```js
 interface WithStatement <: Statement {
@@ -362,7 +360,7 @@ A `with` statement.
 
 ## Control flow
 
-### ReturnStatement
+### return表达式 ReturnStatement
 
 ```js
 interface ReturnStatement <: Statement {
@@ -373,7 +371,7 @@ interface ReturnStatement <: Statement {
 
 A `return` statement.
 
-### LabeledStatement
+### 带标签的表达式 LabeledStatement
 
 ```js
 interface LabeledStatement <: Statement {
@@ -385,7 +383,7 @@ interface LabeledStatement <: Statement {
 
 A labeled statement, i.e., a statement prefixed by a `break`/`continue` label.
 
-### BreakStatement
+### break表达式 BreakStatement
 
 ```js
 interface BreakStatement <: Statement {
@@ -396,7 +394,7 @@ interface BreakStatement <: Statement {
 
 A `break` statement.
 
-### ContinueStatement
+### continue表达式 ContinueStatement
 
 ```js
 interface ContinueStatement <: Statement {
@@ -407,9 +405,9 @@ interface ContinueStatement <: Statement {
 
 A `continue` statement.
 
-## Choice
+## 选择相关 Choice
 
-### IfStatement
+### if表达式 IfStatement
 
 ```js
 interface IfStatement <: Statement {
@@ -422,7 +420,7 @@ interface IfStatement <: Statement {
 
 An `if` statement.
 
-### SwitchStatement
+### Switch表达式 SwitchStatement
 
 ```js
 interface SwitchStatement <: Statement {
@@ -434,7 +432,7 @@ interface SwitchStatement <: Statement {
 
 A `switch` statement.
 
-#### SwitchCase
+#### Switch的case表达式 SwitchCase
 
 ```js
 interface SwitchCase <: Node {
@@ -446,9 +444,9 @@ interface SwitchCase <: Node {
 
 A `case` (if `test` is an `Expression`) or `default` (if `test === null`) clause in the body of a `switch` statement.
 
-## Exceptions
+## 异常相关 Exceptions
 
-### ThrowStatement
+### 抛出异常表达式 ThrowStatement
 
 ```js
 interface ThrowStatement <: Statement {
@@ -459,7 +457,7 @@ interface ThrowStatement <: Statement {
 
 A `throw` statement.
 
-### TryStatement
+### try表达式 TryStatement
 
 ```js
 interface TryStatement <: Statement {
@@ -472,7 +470,7 @@ interface TryStatement <: Statement {
 
 A `try` statement. If `handler` is `null` then `finalizer` must be a `BlockStatement`.
 
-#### CatchClause
+#### catch语句 CatchClause
 
 ```js
 interface CatchClause <: Node {
@@ -484,9 +482,9 @@ interface CatchClause <: Node {
 
 A `catch` clause following a `try` block.
 
-## Loops
+## 循环相关 Loops
 
-### WhileStatement
+### while表达式 WhileStatement
 
 ```js
 interface WhileStatement <: Statement {
@@ -498,7 +496,7 @@ interface WhileStatement <: Statement {
 
 A `while` statement.
 
-### DoWhileStatement
+### do while表达式 DoWhileStatement
 
 ```js
 interface DoWhileStatement <: Statement {
@@ -510,7 +508,7 @@ interface DoWhileStatement <: Statement {
 
 A `do`/`while` statement.
 
-### ForStatement
+### for表达式 ForStatement
 
 ```js
 interface ForStatement <: Statement {
@@ -524,7 +522,7 @@ interface ForStatement <: Statement {
 
 A `for` statement.
 
-### ForInStatement
+### for in表达式 ForInStatement
 
 ```js
 interface ForInStatement <: Statement {
@@ -537,7 +535,7 @@ interface ForInStatement <: Statement {
 
 A `for`/`in` statement.
 
-## ForOfStatement
+## for of表达式 ForOfStatement
 
 ```js
 interface ForOfStatement <: ForInStatement {
@@ -546,7 +544,7 @@ interface ForOfStatement <: ForInStatement {
 }
 ```
 
-# Declarations
+# 声明相关 Declarations
 
 ```js
 interface Declaration <: Statement { }
@@ -554,7 +552,7 @@ interface Declaration <: Statement { }
 
 Any declaration node. Note that declarations are considered statements; this is because declarations can appear in any statement context.
 
-## FunctionDeclaration
+## 函数声明 FunctionDeclaration
 
 ```js
 interface FunctionDeclaration <: Function, Declaration {
@@ -565,7 +563,7 @@ interface FunctionDeclaration <: Function, Declaration {
 
 A function declaration. Note that unlike in the parent interface `Function`, the `id` cannot be `null`, except when this is the child of an `ExportDefaultDeclaration`.
 
-## VariableDeclaration
+## 变量声明 VariableDeclaration
 
 ```js
 interface VariableDeclaration <: Declaration {
@@ -577,7 +575,7 @@ interface VariableDeclaration <: Declaration {
 
 A variable declaration.
 
-### VariableDeclarator
+### 变量声明符 VariableDeclarator   TODO：？？？
 
 ```js
 interface VariableDeclarator <: Node {
@@ -589,9 +587,9 @@ interface VariableDeclarator <: Node {
 
 A variable declarator.
 
-# Misc
+# 杂项 Misc
 
-## Decorator
+## 装饰器 Decorator
 
 ```js
 interface Decorator <: Node {
@@ -600,7 +598,7 @@ interface Decorator <: Node {
 }
 ```
 
-## Directive
+## 指令 Directive
 
 ```js
 interface Directive <: Node {
@@ -609,7 +607,7 @@ interface Directive <: Node {
 }
 ```
 
-## DirectiveLiteral
+## 指令字面量 DirectiveLiteral
 
 ```js
 interface DirectiveLiteral <: StringLiteral {
@@ -617,7 +615,7 @@ interface DirectiveLiteral <: StringLiteral {
 }
 ```
 
-## InterpreterDirective
+## 解释器指令 InterpreterDirective
 
 ```js
 interface InterpreterDirective <: StringLiteral {
@@ -625,7 +623,7 @@ interface InterpreterDirective <: StringLiteral {
 }
 ```
 
-# Expressions
+# Expressions表达式 Expressions
 
 ```js
 interface Expression <: Node { }
@@ -633,7 +631,7 @@ interface Expression <: Node { }
 
 Any expression node. Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.
 
-## Super
+## es6的Super Super
 
 ```js
 interface Super <: Node {
