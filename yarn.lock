@@ -976,8 +976,12 @@ __metadata:
     "@babel/code-frame": "workspace:*"
     "@babel/helper-fixtures": "workspace:*"
     "@babel/helper-validator-identifier": "workspace:*"
+    "@babel/plugin-transform-flow-strip-types": "workspace:packages/babel-plugin-transform-flow-strip-types"
+    "@babel/plugin-transform-modules-commonjs": "workspace:packages/babel-plugin-transform-modules-commonjs"
+    "@babel/preset-flow": "workspace:packages/babel-preset-flow"
     benchmark: ^2.1.4
     charcodes: ^0.2.0
+    flow-remove-types: ^2.159.0
   bin:
     parser: ./bin/babel-parser.js
   languageName: unknown
@@ -8462,6 +8466,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flow-parser@npm:^0.159.0":
+  version: 0.159.0
+  resolution: "flow-parser@npm:0.159.0"
+  checksum: 82baad6f19005cb97a8f90c6a1f1987459f647fc765054dd60119d5edd9b1dea98ec837ca468fcbaa20e9521b19bf3dd68bb7333adea4f79ff68eddc2fc495dd
+  languageName: node
+  linkType: hard
+
+"flow-remove-types@npm:^2.159.0":
+  version: 2.159.0
+  resolution: "flow-remove-types@npm:2.159.0"
+  dependencies:
+    flow-parser: ^0.159.0
+    pirates: ^3.0.2
+    vlq: ^0.2.1
+  bin:
+    flow-node: flow-node
+    flow-remove-types: flow-remove-types
+  checksum: 47585ec710e72833f9e16ba1054e48281308e56e969b3f6340a163cdc948beb1449894dcd99168cef835871b49a23aecf5d0e7983ea0894b820bb7af7e2b332d
+  languageName: node
+  linkType: hard
+
 "flush-write-stream@npm:^1.0.0, flush-write-stream@npm:^1.0.2":
   version: 1.1.1
   resolution: "flush-write-stream@npm:1.1.1"
@@ -12483,6 +12508,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"pirates@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "pirates@npm:3.0.2"
+  dependencies:
+    node-modules-regexp: ^1.0.0
+  checksum: 20fce260583a809fc724b607d7b7fc7972b5e22643b8ea0531e0685799570879e92dab16b9ab8d2198e2bc53cc269f7c6470572b2db29189310805cc50d5fec0
+  languageName: node
+  linkType: hard
+
 "pirates@npm:^4.0.0, pirates@npm:^4.0.1":
   version: 4.0.1
   resolution: "pirates@npm:4.0.1"
@@ -15163,6 +15197,13 @@ typescript@~4.2.3:
     remove-trailing-separator: ^1.0.1
     replace-ext: ^1.0.0
   checksum: 9f4088a075cc3eb2ecbd88b09cb5c7571c4edb64d6ebb80eeaaf18ddb47bbca1ee2808dea4ae6ee338e38e60715c253c67b5f2fe34be630a914e54fae618db9c
+  languageName: node
+  linkType: hard
+
+"vlq@npm:^0.2.1":
+  version: 0.2.3
+  resolution: "vlq@npm:0.2.3"
+  checksum: 48055a9675a8f58c7e78f02707d0e9daa25a7eacbe49d2b215bf35c05eca6399d4ad645c51a512d05c0acd138fb4c003a0e3534a71338f0f2f634a3746d2f03f
   languageName: node
   linkType: hard
 

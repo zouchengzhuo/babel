@@ -7,6 +7,7 @@ import type { PluginList } from "./plugin-utils";
 
 export type SourceType = "script" | "module" | "unambiguous";
 
+// Parser 的构造函数选项
 export type Options = {
   sourceType: SourceType,
   sourceFilename?: string,
@@ -24,6 +25,7 @@ export type Options = {
   errorRecovery: boolean,
 };
 
+// 默认选项
 export const defaultOptions: Options = {
   // Source type ("script" or "module") for different semantics
   sourceType: "script",
@@ -69,7 +71,7 @@ export const defaultOptions: Options = {
 };
 
 // Interpret and default an options object
-
+// 通过opts创建一个选项，没有的属性从default里边取
 export function getOptions(opts: ?Options): Options {
   const options: any = {};
   for (const key of Object.keys(defaultOptions)) {

@@ -18,12 +18,17 @@ export default class Parser extends StatementParser {
   */
 
   constructor(options: ?Options, input: string) {
+    // 没有的key填充默认选项
     options = getOptions(options);
+    //调用基类的构造函数（这里居然允许第二行再调用super）
     super(options, input);
 
     this.options = options;
+    // 初始化 scopes，初始化一些类成员
     this.initializeScopes();
+    // 初始化插件配置，从 [ [name, options] ] 转到 map<name, options>
     this.plugins = pluginsMap(this.options.plugins);
+    // 记录文件名
     this.filename = options.sourceFilename;
   }
 
@@ -32,6 +37,7 @@ export default class Parser extends StatementParser {
     return ScopeHandler;
   }
 
+  //parse入口函数
   parse(): File {
     this.enterInitialScopes();
     const file = this.startNode();

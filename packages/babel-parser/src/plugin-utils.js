@@ -8,6 +8,7 @@ export type PluginList = $ReadOnlyArray<Plugin>;
 
 export type MixinPlugin = (superClass: Class<Parser>) => Class<Parser>;
 
+// 判断插件列表中是否含有一个名为 name 的插件，validatePlugins中有使用
 export function hasPlugin(plugins: PluginList, name: string): boolean {
   return plugins.some(plugin => {
     if (Array.isArray(plugin)) {
@@ -18,6 +19,7 @@ export function hasPlugin(plugins: PluginList, name: string): boolean {
   });
 }
 
+// 获取插件的选项值，validatePlugins中有使用
 export function getPluginOption(
   plugins: PluginList,
   name: string,
@@ -41,8 +43,11 @@ export function getPluginOption(
 const PIPELINE_PROPOSALS = ["minimal", "smart", "fsharp"];
 const RECORD_AND_TUPLE_SYNTAX_TYPES = ["hash", "bar"];
 
+// 校验 plugins
 export function validatePlugins(plugins: PluginList) {
+  // 如果有decorators plugin
   if (hasPlugin(plugins, "decorators")) {
+    //那么不能有 decorators-legacy plugin
     if (hasPlugin(plugins, "decorators-legacy")) {
       throw new Error(
         "Cannot use the decorators and decorators-legacy plugin together",
@@ -54,6 +59,7 @@ export function validatePlugins(plugins: PluginList) {
       "decorators",
       "decoratorsBeforeExport",
     );
+    // 必须有一个值为 bool 类型的 decoratorsBeforeExport 选项
     if (decoratorsBeforeExport == null) {
       throw new Error(
         "The 'decorators' plugin requires a 'decoratorsBeforeExport' option," +
@@ -66,14 +72,16 @@ export function validatePlugins(plugins: PluginList) {
     }
   }
 
+  // 不能同时使用 flow 插件和 typescript 插件
   if (hasPlugin(plugins, "flow") && hasPlugin(plugins, "typescript")) {
     throw new Error("Cannot combine flow and typescript plugins.");
   }
 
+  // 不能同时使用 placeholders 插件和 v8intrinsic 插件
   if (hasPlugin(plugins, "placeholders") && hasPlugin(plugins, "v8intrinsic")) {
     throw new Error("Cannot combine placeholders and v8intrinsic plugins.");
   }
-
+  // 如果有 pipelineOperator 插件，那么必须有包含在 PIPELINE_PROPOSALS 中的 proposal 属性
   if (
     hasPlugin(plugins, "pipelineOperator") &&
     !PIPELINE_PROPOSALS.includes(
@@ -85,7 +93,7 @@ export function validatePlugins(plugins: PluginList) {
         PIPELINE_PROPOSALS.map(p => `'${p}'`).join(", "),
     );
   }
-
+  // 有 moduleAttributes 插件的相关限制
   if (hasPlugin(plugins, "moduleAttributes")) {
     if (process.env.BABEL_8_BREAKING) {
       throw new Error(
@@ -111,7 +119,7 @@ export function validatePlugins(plugins: PluginList) {
       }
     }
   }
-
+  // recordAndTuple插件的相关限制
   if (
     hasPlugin(plugins, "recordAndTuple") &&
     !RECORD_AND_TUPLE_SYNTAX_TYPES.includes(
@@ -123,7 +131,7 @@ export function validatePlugins(plugins: PluginList) {
         RECORD_AND_TUPLE_SYNTAX_TYPES.map(p => `'${p}'`).join(", "),
     );
   }
-
+  // asyncDoExpressions插件的相关限制
   if (
     hasPlugin(plugins, "asyncDoExpressions") &&
     !hasPlugin(plugins, "doExpressions")
