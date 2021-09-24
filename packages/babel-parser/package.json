@@ -9,6 +9,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "start:debug": "node -r @babel/register ./dev/test.js"
+  },
   "keywords": [
     "babel",
     "javascript",
@@ -39,12 +42,8 @@
     "@babel/helper-validator-identifier": "workspace:*",
     "benchmark": "^2.1.4",
     "charcodes": "^0.2.0",
-    "flow-remove-types": "^2.159.0"
-  },
-  "bin": "./bin/babel-parser.js",
-  "dependencies": {
     "@babel/plugin-transform-flow-strip-types": "workspace:packages/babel-plugin-transform-flow-strip-types",
-    "@babel/plugin-transform-modules-commonjs": "workspace:packages/babel-plugin-transform-modules-commonjs",
-    "@babel/preset-flow": "workspace:packages/babel-preset-flow"
-  }
+    "@babel/plugin-transform-modules-commonjs": "workspace:packages/babel-plugin-transform-modules-commonjs"
+  },
+  "bin": "./bin/babel-parser.js"
 }

@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "debug babel parser",
+            "name": "debug parse fn",
             "skipFiles": [
                 "<node_internals>/**"
             ],
